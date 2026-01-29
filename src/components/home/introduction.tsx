@@ -21,25 +21,21 @@ export function Introduction() {
             const tl = gsap.timeline({
                 scrollTrigger: {
                     trigger: container.current,
-                    start: "top 70%",
+                    start: "top 80%",
                     end: "bottom center",
-                    toggleActions: "play none none reverse",
+                    toggleActions: "play none none none",
                 }
             });
 
-            tl.from(titleRef.current, {
-                y: 40,
-                opacity: 0,
-                duration: 0.8,
-                ease: "power2.out"
-            })
-                .from((itemsRef.current as any).children, {
-                    y: 60,
-                    opacity: 0,
-                    duration: 0.6,
-                    stagger: 0.1,
-                    ease: "back.out(1.7)"
-                }, "-=0.4");
+            tl.fromTo(titleRef.current,
+                { y: 40, opacity: 0 },
+                { y: 0, opacity: 1, duration: 0.8, ease: "power2.out" }
+            )
+                .fromTo(".feature-card",
+                    { y: 60, opacity: 0 },
+                    { y: 0, opacity: 1, duration: 0.6, stagger: 0.1, ease: "back.out(1.7)" },
+                    "-=0.4"
+                );
 
             // Parallax for cards
             gsap.to(itemsRef.current, {
@@ -91,7 +87,7 @@ export function Introduction() {
 
                     <div className="md:w-1/2 grid grid-cols-1 sm:grid-cols-2 gap-6" ref={itemsRef}>
                         {features.map((feature, idx) => (
-                            <div key={idx} className="bg-background p-6 rounded-xl shadow-sm border border-border/50 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 group">
+                            <div key={idx} className="feature-card bg-background p-6 rounded-xl shadow-sm border border-border/50 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 group">
                                 <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-4 group-hover:bg-primary group-hover:text-primary-foreground transition-colors duration-300">
                                     <feature.icon size={24} />
                                 </div>
