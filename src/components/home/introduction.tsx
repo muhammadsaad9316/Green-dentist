@@ -60,7 +60,7 @@ export function Introduction() {
     ];
 
     return (
-        <section ref={container} className="py-24 bg-muted/30 overflow-hidden">
+        <section ref={container} className="py-12 md:py-24 bg-muted/30 overflow-hidden">
             <div className="container mx-auto px-4 md:px-6">
                 <div className="flex flex-col md:flex-row gap-16 items-center">
                     <div className="md:w-1/2 space-y-6" ref={titleRef}>

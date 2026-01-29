@@ -193,7 +193,7 @@ export function Hero() {
     }, { scope: containerRef });
 
     return (
-        <section ref={containerRef} className="relative min-h-[133vh] flex items-start -mt-6 overflow-hidden bg-background">
+        <section ref={containerRef} className="relative min-h-screen md:min-h-[133vh] flex items-start -mt-6 overflow-hidden bg-background">
             {/* Abstract Background Elements */}
             <div ref={bgRef} className="absolute inset-0 pointer-events-none z-0">
                 <div className="absolute top-0 right-0 w-[60%] h-full bg-accent/20 rounded-l-[100px] transform translate-x-20" />

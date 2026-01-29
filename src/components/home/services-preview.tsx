@@ -67,7 +67,7 @@ export function ServicesPreview() {
     }, { scope: container });
 
     return (
-        <section ref={container} className="py-24 bg-background relative overflow-hidden">
+        <section ref={container} className="py-12 md:py-24 bg-background relative overflow-hidden">
             <div className="container mx-auto px-4 md:px-6 relative z-10">
                 <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
                     <span className="text-sm font-bold tracking-widest text-primary uppercase">Our Expertise</span>
