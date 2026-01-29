@@ -50,19 +50,23 @@ export function ServicesPreview() {
     const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
 
     useGSAP(() => {
-        // Staggered entry animation
-        gsap.from(cardsRef.current, {
-            scrollTrigger: {
-                trigger: container.current,
-                start: "top 75%",
-                end: "bottom center",
-                toggleActions: "play none none reverse",
-            },
-            y: 60,
-            opacity: 0,
-            duration: 0.8,
-            stagger: 0.15,
-            ease: "power3.out",
+        const mm = gsap.matchMedia();
+
+        mm.add("(min-width: 768px)", () => {
+            // Staggered entry animation only on desktop
+            gsap.from(cardsRef.current, {
+                scrollTrigger: {
+                    trigger: container.current,
+                    start: "top 75%",
+                    end: "bottom center",
+                    toggleActions: "play none none reverse",
+                },
+                y: 60,
+                opacity: 0,
+                duration: 0.8,
+                stagger: 0.15,
+                ease: "power3.out",
+            });
         });
     }, { scope: container });
 

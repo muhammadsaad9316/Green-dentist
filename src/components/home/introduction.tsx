@@ -15,39 +15,43 @@ export function Introduction() {
     const itemsRef = useRef(null);
 
     useGSAP(() => {
-        const tl = gsap.timeline({
-            scrollTrigger: {
-                trigger: container.current,
-                start: "top 70%",
-                end: "bottom center",
-                toggleActions: "play none none reverse",
-            }
-        });
+        const mm = gsap.matchMedia();
 
-        tl.from(titleRef.current, {
-            y: 40,
-            opacity: 0,
-            duration: 0.8,
-            ease: "power2.out"
-        })
-            .from((itemsRef.current as any).children, {
-                y: 60,
+        mm.add("(min-width: 768px)", () => {
+            const tl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: container.current,
+                    start: "top 70%",
+                    end: "bottom center",
+                    toggleActions: "play none none reverse",
+                }
+            });
+
+            tl.from(titleRef.current, {
+                y: 40,
                 opacity: 0,
-                duration: 0.6,
-                stagger: 0.1,
-                ease: "back.out(1.7)"
-            }, "-=0.4");
+                duration: 0.8,
+                ease: "power2.out"
+            })
+                .from((itemsRef.current as any).children, {
+                    y: 60,
+                    opacity: 0,
+                    duration: 0.6,
+                    stagger: 0.1,
+                    ease: "back.out(1.7)"
+                }, "-=0.4");
 
-        // Parallax for cards
-        gsap.to(itemsRef.current, {
-            y: -30,
-            ease: "none",
-            scrollTrigger: {
-                trigger: container.current,
-                start: "top bottom",
-                end: "bottom top",
-                scrub: 1
-            }
+            // Parallax for cards
+            gsap.to(itemsRef.current, {
+                y: -30,
+                ease: "none",
+                scrollTrigger: {
+                    trigger: container.current,
+                    start: "top bottom",
+                    end: "bottom top",
+                    scrub: 1
+                }
+            });
         });
 
     }, { scope: container });

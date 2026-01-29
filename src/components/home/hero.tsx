@@ -268,7 +268,7 @@ export function Hero() {
                 </div>
 
                 {/* Hero Image */}
-                <div ref={imageContainerRef} className="relative h-[650px] w-full hidden md:block group perspective-1000">
+                <div ref={imageContainerRef} className="relative h-[400px] md:h-[650px] w-full block group perspective-1000 mt-12 md:mt-0">
                     <div className="relative w-full h-full rounded-[2.5rem] overflow-hidden shadow-2xl transition-all duration-700">
                         {/* Image Wrapper for Scaling */}
                         <div className="absolute inset-0 bg-stone-100">

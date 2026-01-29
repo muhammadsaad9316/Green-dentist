@@ -71,22 +71,22 @@ export function Navbar() {
                     {/* Mobile Menu Overlay */}
                     <div
                         className={cn(
-                            "fixed inset-0 bg-background/95 backdrop-blur-md flex flex-col items-center justify-center gap-8 transition-transform duration-300 ease-in-out md:hidden",
+                            "fixed inset-0 bg-background/95 backdrop-blur-md flex flex-col items-center justify-center gap-8 transition-transform duration-300 ease-in-out md:hidden overflow-y-auto py-8",
                             isOpen ? "translate-x-0" : "translate-x-full"
                         )}
-                        style={{ top: "0", height: "100vh" }}
+                        style={{ top: "0", height: "100dvh" }}
                     >
                         {navLinks.map((link) => (
                             <Link
                                 key={link.name}
                                 href={link.href}
-                                className="text-2xl font-serif font-medium hover:text-primary transition-colors"
+                                className="text-2xl font-serif font-medium hover:text-primary transition-colors shrink-0"
                                 onClick={() => setIsOpen(false)}
                             >
                                 {link.name}
                             </Link>
                         ))}
-                        <Link href="/book" onClick={() => setIsOpen(false)}>
+                        <Link href="/book" onClick={() => setIsOpen(false)} className="shrink-0">
                             <Button size="lg" className="mt-4 w-40">
                                 Book Now
                             </Button>
