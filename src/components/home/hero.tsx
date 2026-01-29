@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { gsap } from "gsap";
@@ -161,6 +162,27 @@ export function Hero() {
         });
 
         // ... (stats animation)
+        const stats = statsRef.current?.querySelectorAll(".stat-num");
+        stats?.forEach((stat: any) => {
+            const targetStr = stat.getAttribute("data-target");
+            const target = parseFloat(targetStr);
+            const isFloat = targetStr.includes(".");
+
+            gsap.fromTo(stat,
+                { textContent: 0 },
+                {
+                    textContent: target,
+                    duration: animationConfig.duration.xxl, // approx 2s
+                    ease: "power1.out",
+                    snap: { textContent: isFloat ? 0.1 : 1 },
+                    scrollTrigger: {
+                        trigger: statsRef.current,
+                        start: "top 85%",
+                        once: true,
+                    }
+                }
+            );
+        });
 
         // Cleanup
         return () => {
@@ -201,13 +223,17 @@ export function Hero() {
                     </p>
 
                     <div ref={buttonsRef} className="flex flex-col sm:flex-row gap-5 pt-2">
-                        <Button size="lg" className="magnetic-btn rounded-xl px-8 py-7 text-lg shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 bg-primary text-primary-foreground border-0 ring-offset-2 ring-offset-background z-20">
-                            Book a Visit
-                        </Button>
-                        <Button size="lg" variant="ghost" className="magnetic-btn rounded-xl px-8 py-7 text-lg hover:bg-transparent hover:text-primary group z-20">
-                            (555) 123-4567
-                            <span className="ml-2 group-hover:translate-x-1 transition-transform">→</span>
-                        </Button>
+                        <Link href="/book">
+                            <Button size="lg" className="magnetic-btn rounded-xl px-8 py-7 text-lg shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 bg-primary text-primary-foreground border-0 ring-offset-2 ring-offset-background z-20">
+                                Book a Visit
+                            </Button>
+                        </Link>
+                        <Link href="/contact">
+                            <Button size="lg" variant="ghost" className="magnetic-btn rounded-xl px-8 py-7 text-lg hover:bg-transparent hover:text-primary group z-20">
+                                (555) 123-4567
+                                <span className="ml-2 group-hover:translate-x-1 transition-transform">→</span>
+                            </Button>
+                        </Link>
                     </div>
 
                     <div ref={statsRef} className="pt-8 flex items-center gap-8 border-t border-border/50">
