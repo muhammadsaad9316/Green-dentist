@@ -1,11 +1,12 @@
 import { useRef, useCallback } from 'react';
 
+// T extends function with unknown args and return type
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function useThrottle<T extends (...args: any[]) => any>(
     func: T,
     delay: number
 ): T {
     const lastRun = useRef(0);
-    const timeout = useRef<NodeJS.Timeout | null>(null);
 
     return useCallback(
         (...args: Parameters<T>) => {
@@ -14,12 +15,6 @@ export function useThrottle<T extends (...args: any[]) => any>(
             if (now - lastRun.current >= delay) {
                 func(...args);
                 lastRun.current = now;
-            } else {
-                // Optional: Run trailing edge? 
-                // For rate limiting submissions, we usually just drop calls.
-                // But for throttle, usually we want at least one run?
-                // Let's implement simple drop-if-too-soon (which is essentially rate limiting).
-                // If strict throttle (run at most once per delay), drop is correct.
             }
         },
         [func, delay]

@@ -1,14 +1,22 @@
-import { Navbar } from "@/components/layout/navbar";
-import { Footer } from "@/components/layout/footer";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, CheckCircle2, Clock, DollarSign } from "lucide-react";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
 import { images } from "@/lib/images";
-import { notFound } from "next/navigation";
+// import { notFound } from "next/navigation";
+
+interface ServiceData {
+    title: string;
+    category: string;
+    description: string;
+    image: StaticImageData | string;
+    benefits: string[];
+    procedure: { step: number; title: string; desc: string }[];
+    faq: { q: string; a: string }[];
+}
 
 // Mock Data Source - In a real app this would likely come from getStaticProps/getStaticPaths or a CMS
-const servicesData: Record<string, any> = {
+const servicesData: Record<string, ServiceData> = {
     "routine-checkups": {
         title: "Routine Checkups & Cleaning",
         category: "General Dentistry",
@@ -120,7 +128,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
                         <section>
                             <h2 className="text-2xl font-serif font-bold mb-6">What to Expect</h2>
                             <div className="space-y-6 relative border-l-2 border-muted pl-8 ml-3">
-                                {service.procedure.map((step: any, i: number) => (
+                                {service.procedure.map((step, i) => (
                                     <div key={i} className="relative">
                                         <div className="absolute -left-[43px] w-8 h-8 rounded-full bg-background border-2 border-primary flex items-center justify-center font-bold text-primary text-sm">
                                             {step.step}
@@ -136,7 +144,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
                         <section>
                             <h2 className="text-2xl font-serif font-bold mb-6">Common Questions</h2>
                             <div className="space-y-4">
-                                {service.faq.map((item: any, i: number) => (
+                                {service.faq.map((item, i) => (
                                     <div key={i} className="border border-border rounded-lg p-6">
                                         <h4 className="font-bold mb-2 text-lg">{item.q}</h4>
                                         <p className="text-muted-foreground">{item.a}</p>

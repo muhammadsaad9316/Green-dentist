@@ -1,5 +1,4 @@
-import { Navbar } from "@/components/layout/navbar";
-import { Footer } from "@/components/layout/footer";
+
 import { ServiceGrid } from "@/components/services/service-grid";
 import { BeforeAfterGallery } from "@/components/services/before-after-gallery";
 

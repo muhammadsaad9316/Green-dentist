@@ -13,7 +13,8 @@ export function WhatsAppButton() {
         if (!btn) return;
 
         // Defer animation to avoid blocking main thread during initial load
-        const rIC = (window as any).requestIdleCallback || ((cb: any) => setTimeout(cb, 1));
+        // Defer animation to avoid blocking main thread during initial load
+        const rIC = (window as unknown as { requestIdleCallback: (cb: FrameRequestCallback) => number }).requestIdleCallback || ((cb: FrameRequestCallback) => setTimeout(cb, 1));
 
         rIC(() => {
             if (!btn) return; // double check existence

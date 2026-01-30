@@ -90,7 +90,7 @@ export function ServicesPreview() {
                             key={index}
                             ref={(el) => { cardsRef.current[index] = el }}
                         >
-                            <Card className="h-full border-border/50 hover:border-primary/50 transition-all duration-300 hover:shadow-lg group cursor-pointer overflow-hidden relative">
+                            <Card className="h-full border-border/50 hover:border-primary/50 transition-all duration-300 hover:shadow-lg group overflow-hidden relative">
                                 <CardHeader>
                                     <motion.div
                                         className={`w-14 h-14 rounded-2xl ${service.color} flex items-center justify-center mb-4`}

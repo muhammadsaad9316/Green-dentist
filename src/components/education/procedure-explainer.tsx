@@ -3,12 +3,26 @@
 import { useState } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Microscope, ShieldCheck, Sparkles, Syringe } from "lucide-react"; import { motion, AnimatePresence } from "framer-motion";
+import { Microscope, ShieldCheck, Sparkles, type LucideIcon } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import { images } from "@/lib/images";
+import type { StaticImageData } from "next/image";
 
 // Mock Data for Interactive Diagrams
-const procedures = {
+interface ProcedureStep {
+    title: string;
+    desc: string;
+    image: StaticImageData | string;
+}
+
+interface Procedure {
+    id: string;
+    title: string;
+    icon: LucideIcon;
+    steps: ProcedureStep[];
+}
+
+const procedures: Record<string, Procedure> = {
     rootcanal: {
         id: "rootcanal",
         title: "Root Canal Therapy",
@@ -80,7 +94,7 @@ export function ProcedureExplainer() {
                         {Object.values(procedures).map((proc) => (
                             <button
                                 key={proc.id}
-                                onClick={() => { setActiveProcedure(proc.id as any); setActiveStep(0); }}
+                                onClick={() => { setActiveProcedure(proc.id as keyof typeof procedures); setActiveStep(0); }}
                                 className={`w-full text-left px-4 py-3 rounded-lg flex items-center gap-3 transition-all ${activeProcedure === proc.id
                                     ? "bg-primary text-primary-foreground font-semibold shadow-md"
                                     : "hover:bg-muted text-muted-foreground hover:text-foreground"

@@ -1,5 +1,4 @@
-import { Navbar } from "@/components/layout/navbar";
-import { Footer } from "@/components/layout/footer";
+
 import { BookingForm } from "@/components/booking/booking-form";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 
@@ -11,7 +10,7 @@ export default function BookingPage() {
                     <div className="text-center mb-12">
                         <h1 className="text-3xl md:text-5xl font-serif font-bold mb-4">Book Your Appointment</h1>
                         <p className="text-muted-foreground text-lg">
-                            Select a service, choose a time, and we'll take care of the rest.
+                            Select a service, choose a time, and we&apos;ll take care of the rest.
                         </p>
                     </div>
 

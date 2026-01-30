@@ -30,7 +30,7 @@ export function StepReview({ formData }: StepReviewProps) {
                 </div>
             </div>
             <p className="text-sm text-muted-foreground">
-                By clicking "Confirm Booking", you agree to our cancellation policy.
+                By clicking &quot;Confirm Booking&quot;, you agree to our cancellation policy.
             </p>
         </div>
     );

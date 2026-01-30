@@ -53,18 +53,18 @@ export const animationConfig = {
         default: 0.1,
         slow: 0.2
     },
-} as const;
+};
 
 /**
  * Disable all animations (for accessibility/performance)
  */
 export function disableAnimations() {
-    (animationConfig as any).enabled = false;
+    animationConfig.enabled = false;
 }
 
 /**
  * Enable all animations
  */
 export function enableAnimations() {
-    (animationConfig as any).enabled = true;
+    animationConfig.enabled = true;
 }

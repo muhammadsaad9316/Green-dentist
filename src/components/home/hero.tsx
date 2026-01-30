@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
@@ -141,7 +141,7 @@ export function Hero() {
         const cleanups: (() => void)[] = [];
 
         buttons?.forEach((btn) => {
-            const mouseMoveHandler = (e: any) => {
+            const mouseMoveHandler = (e: globalThis.MouseEvent) => {
                 const rect = btn.getBoundingClientRect();
                 const x = e.clientX - rect.left - rect.width / 2;
                 const y = e.clientY - rect.top - rect.height / 2;
@@ -152,19 +152,19 @@ export function Hero() {
                 gsap.to(btn, { x: 0, y: 0, duration: animationConfig.duration.short, ease: animationConfig.easing.bounce });
             };
 
-            btn.addEventListener("mousemove", mouseMoveHandler as any);
+            btn.addEventListener("mousemove", mouseMoveHandler as unknown as EventListener);
             btn.addEventListener("mouseleave", mouseLeaveHandler);
 
             cleanups.push(() => {
-                btn.removeEventListener("mousemove", mouseMoveHandler as any);
+                btn.removeEventListener("mousemove", mouseMoveHandler as unknown as EventListener);
                 btn.removeEventListener("mouseleave", mouseLeaveHandler);
             });
         });
 
         // ... (stats animation)
         const stats = statsRef.current?.querySelectorAll(".stat-num");
-        stats?.forEach((stat: any) => {
-            const targetStr = stat.getAttribute("data-target");
+        stats?.forEach((stat: Element) => {
+            const targetStr = stat.getAttribute("data-target") || "0";
             const target = parseFloat(targetStr);
             const isFloat = targetStr.includes(".");
 
@@ -219,7 +219,7 @@ export function Hero() {
 
                     <p ref={textRef} className="text-lg md:text-xl text-muted-foreground md:pr-10 font-light leading-relaxed">
                         We hate clinical coldness as much as you do.
-                        Come in for a chat, a coffee, and the most comfortable dental care you've ever experienced.
+                        Come in for a chat, a coffee, and the most comfortable dental care you&apos;ve ever experienced.
                     </p>
 
                     <div ref={buttonsRef} className="flex flex-col sm:flex-row gap-5 pt-2">
@@ -290,7 +290,7 @@ export function Hero() {
                     {/* Handwritten Note Effect */}
                     <div className="absolute -bottom-12 -left-12 bg-background/95 backdrop-blur-sm p-8 rounded-t-2xl rounded-bl-3xl rounded-br-md shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-white/50 z-20 max-w-xs rotate-[-3deg] transition-transform duration-500 hover:rotate-0 hover:scale-105">
                         <p className="font-serif italic text-xl text-foreground leading-snug">
-                            "Finally found a dentist I don't dread visiting."
+                            &quot;Finally found a dentist I don&apos;t dread visiting.&quot;
                         </p>
                         <div className="flex items-center gap-3 mt-4">
                             <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-xs font-bold text-primary">SM</div>

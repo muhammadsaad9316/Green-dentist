@@ -1,16 +1,16 @@
 import { useState } from "react";
 
-interface UseFormSubmissionOptions {
-    onSubmit: (data: any) => Promise<void>;
+interface UseFormSubmissionOptions<T> {
+    onSubmit: (data: T) => Promise<void>;
     onSuccess?: () => void;
 }
 
-export function useFormSubmission({ onSubmit, onSuccess }: UseFormSubmissionOptions) {
+export function useFormSubmission<T>({ onSubmit, onSuccess }: UseFormSubmissionOptions<T>) {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
-    const handleSubmit = async (data: any) => {
+    const handleSubmit = async (data: T) => {
         setIsSubmitting(true);
         setError(null);
 

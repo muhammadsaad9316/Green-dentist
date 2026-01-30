@@ -1,5 +1,5 @@
 import { MapPin, Phone, Mail, Clock } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
+
 
 export function ContactInfo() {
     return (

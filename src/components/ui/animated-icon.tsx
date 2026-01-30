@@ -5,7 +5,7 @@ import Lottie, { LottieRefCurrentProps } from 'lottie-react';
 import { cn } from '@/lib/utils';
 
 interface AnimatedIconProps {
-    animationData: unknown;
+    animationData: Record<string, unknown>;
     className?: string;
     loop?: boolean;
     autoplay?: boolean;

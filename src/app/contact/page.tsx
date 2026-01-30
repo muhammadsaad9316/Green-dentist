@@ -10,7 +10,7 @@ export default function ContactPage() {
                 <div className="container mx-auto px-4">
                     <h1 className="text-4xl md:text-5xl font-serif font-bold mb-4">Get in Touch</h1>
                     <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-                        We're here to answer your questions and help you achieve your best smile.
+                        We&apos;re here to answer your questions and help you achieve your best smile.
                     </p>
                 </div>
             </section>

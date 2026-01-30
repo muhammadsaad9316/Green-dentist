@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Calendar, X } from "lucide-react";
-import { cn } from "@/lib/utils";
+
 import { AnimatePresence, motion } from "framer-motion";
 
 export function StickyAppointmentButton() {
@@ -49,9 +49,10 @@ export function StickyAppointmentButton() {
                         Book Online
                     </Button>
                     <button
+                        type="button"
                         onClick={() => setIsDismissed(true)}
                         className="bg-background/80 hover:bg-background text-muted-foreground hover:text-foreground p-1 rounded-full shadow-sm backdrop-blur-sm transition-colors"
-                        aria-label="Dismiss"
+                        aria-label="Dismiss sticky booking button"
                     >
                         <X size={16} />
                     </button>

@@ -11,7 +11,7 @@ gsap.registerPlugin(ScrollTrigger);
 const milestones = [
     { year: "2010", title: "Practice Founded", description: "Dr. Mitchell opens the first clinic with a vision for patient-centered care." },
     { year: "2015", title: "Expansion & Renovation", description: "Doubled our capacity and introduced state-of-the-art 3D imaging technology." },
-    { year: "2019", title: "Pediatric Wing", description: "Opened a dedicated wing designed specifically for children's comfort." },
+    { year: "2019", title: "Pediatric Wing", description: "Opened a dedicated wing designed specifically for children&apos;s comfort." },
     { year: "2023", title: "Award Winning Care", description: "Voted top dental practice in the city for the 5th consecutive year." },
 ];
 
@@ -37,7 +37,7 @@ export function PracticeTimeline() {
         );
 
         // Items fade in
-        itemsRef.current.forEach((item, i) => {
+        itemsRef.current.forEach((item) => {
             gsap.from(item, {
                 opacity: 0,
                 x: -20,

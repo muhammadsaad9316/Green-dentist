@@ -20,7 +20,7 @@ export function SuccessScreen({ formData }: SuccessScreenProps) {
                 {formData.date ? format(formData.date, "MMMM do") : ""} at {formData.timeSlot}.
             </CardDescription>
             <p className="text-muted-foreground mt-4 text-sm">
-                We've sent a confirmation email to {formData.email}.
+                We&apos;ve sent a confirmation email to {formData.email}.
             </p>
             <div className="mt-8">
                 <Button onClick={() => (window.location.href = "/")}>Return Home</Button>

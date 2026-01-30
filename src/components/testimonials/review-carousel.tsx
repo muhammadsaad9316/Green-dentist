@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
 import { Star, Quote } from "lucide-react";
@@ -103,7 +103,7 @@ export function ReviewCarousel() {
                                     {[...Array(review.rating)].map((_, i) => <Star key={i} fill="currentColor" size={16} />)}
                                 </div>
 
-                                <p className="text-lg leading-relaxed mb-8 flex-1 relative z-10">"{review.text}"</p>
+                                <p className="text-lg leading-relaxed mb-8 flex-1 relative z-10">&quot;{review.text}&quot;</p>
 
 
                                 <div className="flex items-center gap-4 mt-auto">

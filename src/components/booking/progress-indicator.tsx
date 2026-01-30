@@ -1,25 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { CheckCircle2 } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { usePathname } from "next/navigation";
 
 export function FloatingProgressIndicator() {
-    const [show, setShow] = useState(false);
-    const [progress, setProgress] = useState(0);
-
-    useEffect(() => {
-        // Only show on booking page for demo purposes, or could be global
-        if (window.location.pathname.includes("/book")) {
-            setShow(true);
-        } else {
-            setShow(false);
-        }
-
-        // In a real app, this would listen to form state context
-        // For now, we'll just mock it or leave it as a static indicator of where they are in general flow
-
-    }, []);
+    const pathname = usePathname();
+    const show = pathname?.includes("/book");
 
     if (!show) return null;
 

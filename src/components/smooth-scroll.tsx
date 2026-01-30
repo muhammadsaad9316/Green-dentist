@@ -46,7 +46,7 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
             gsap.ticker.remove(lenis.raf);
             lenis.destroy();
         };
-    }, []);
+    }, [prefersReducedMotion]);
 
     return <div className="min-h-screen flex flex-col">{children}</div>;
 }

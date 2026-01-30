@@ -64,7 +64,7 @@ export function ContactForm() {
                         </div>
                         <div>
                             <p className="font-bold">Message Sent!</p>
-                            <p className="text-sm">We'll get back to you shortly.</p>
+                            <p className="text-sm">We&apos;ll get back to you shortly.</p>
                             <Button variant="link" className="p-0 h-auto text-green-700 mt-2" onClick={() => setIsSuccess(false)}>
                                 Send another message
                             </Button>
@@ -73,32 +73,32 @@ export function ContactForm() {
                 ) : (
                     <form onSubmit={handleSubmit(throttledSubmit)} className="space-y-4">
                         <div className="space-y-2">
-                            <Label>Full Name</Label>
-                            <Input {...register("name")} placeholder="John Doe" />
+                            <Label htmlFor="name">Full Name</Label>
+                            <Input id="name" {...register("name")} placeholder="John Doe" />
                             {errors.name && <p role="alert" aria-live="polite" className="text-red-500 text-sm">{errors.name.message}</p>}
                         </div >
 
                         <div className="grid grid-cols-2 gap-4">
                             <div className="space-y-2">
-                                <Label>Email</Label>
-                                <Input {...register("email")} placeholder="john@example.com" />
+                                <Label htmlFor="email">Email</Label>
+                                <Input id="email" {...register("email")} placeholder="john@example.com" />
                                 {errors.email && <p role="alert" aria-live="polite" className="text-red-500 text-sm">{errors.email.message}</p>}
                             </div>
                             <div className="space-y-2">
-                                <Label>Phone (Optional)</Label>
-                                <Input {...register("phone")} placeholder="(555) 123-4567" />
+                                <Label htmlFor="phone">Phone (Optional)</Label>
+                                <Input id="phone" {...register("phone")} placeholder="(555) 123-4567" />
                             </div>
                         </div>
 
                         <div className="space-y-2">
-                            <Label>Subject</Label>
-                            <Input {...register("subject")} placeholder="Inquiry about..." />
+                            <Label htmlFor="subject">Subject</Label>
+                            <Input id="subject" {...register("subject")} placeholder="Inquiry about..." />
                             {errors.subject && <p role="alert" aria-live="polite" className="text-red-500 text-sm">{errors.subject.message}</p>}
                         </div>
 
                         <div className="space-y-2">
-                            <Label>Message</Label>
-                            <Textarea {...register("message")} className="min-h-[150px]" placeholder="How can we help you?" />
+                            <Label htmlFor="message">Message</Label>
+                            <Textarea id="message" {...register("message")} className="min-h-[150px]" placeholder="How can we help you?" />
                             {errors.message && <p role="alert" aria-live="polite" className="text-red-500 text-sm">{errors.message.message}</p>}
                         </div>
 

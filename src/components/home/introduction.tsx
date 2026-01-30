@@ -74,7 +74,7 @@ export function Introduction() {
                             to ensure your comfort at every visit.
                         </p>
                         <p className="text-lg text-muted-foreground leading-relaxed">
-                            Whether you're here for a routine checkup or a complete smile makeover,
+                            Whether you&apos;re here for a routine checkup or a complete smile makeover,
                             we listen to your unique needs and goals.
                         </p>
                         <div className="pt-4">

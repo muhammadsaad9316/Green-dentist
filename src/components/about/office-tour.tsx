@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { Expand, X } from "lucide-react";
-import { cn } from "@/lib/utils";
+
 import { images as imgReg } from "@/lib/images";
 
 // Mock Images
@@ -37,8 +37,17 @@ export function OfficeTour() {
                     {images.map((img, index) => (
                         <div
                             key={index}
-                            className="group relative aspect-[4/3] rounded-xl overflow-hidden cursor-pointer shadow-sm hover:shadow-xl transition-all duration-300"
+                            role="button"
+                            tabIndex={0}
+                            aria-label={`View larger image of ${img.alt}`}
+                            className="group relative aspect-[4/3] rounded-xl overflow-hidden cursor-pointer shadow-sm hover:shadow-xl transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                             onClick={() => setSelectedImage(index)}
+                            onKeyDown={(e) => {
+                                if (e.key === 'Enter' || e.key === ' ') {
+                                    e.preventDefault();
+                                    setSelectedImage(index);
+                                }
+                            }}
                         >
                             <Image
                                 src={img.src}

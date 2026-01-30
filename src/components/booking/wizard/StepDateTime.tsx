@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { logger } from "@/lib/logger";
 import { Calendar } from "@/components/ui/calendar";
 import { TimeSlotButton } from "../ui/TimeSlotButton";
 import { TimeSlotSkeleton } from "../ui/TimeSlotSkeleton";
@@ -41,7 +42,7 @@ export function StepDateTime({
             setSlots(availableSlots);
             setHasLoadedOnce(true);
         } catch (error) {
-            console.error("Failed to fetch slots:", error);
+            logger.error("Failed to fetch slots:", error);
             setSlots([]);
         } finally {
             setIsLoading(false);

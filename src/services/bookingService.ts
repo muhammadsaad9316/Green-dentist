@@ -1,5 +1,6 @@
 import type { BookingFormValues } from "@/lib/validation/bookingSchema";
 import { getServiceById } from "./serviceService";
+import { logger } from "@/lib/logger";
 
 /**
  * Create booking summary from form data
@@ -34,7 +35,7 @@ export async function checkAvailability(date: Date, timeSlot: string): Promise<b
         return response.data.available;
     } catch (error) {
         // Fallback to true if API fails for now, or handle specifically
-        console.error("Availability check failed:", error);
+        logger.error("Availability check failed:", error);
         return true;
     }
 }

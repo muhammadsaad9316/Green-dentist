@@ -1,4 +1,5 @@
-import { useRef, useEffect } from "react";
+import { useRef } from "react";
+import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { animationConfig } from "@/lib/animations";
@@ -19,26 +20,22 @@ export function useScrollAnimation(
 ) {
     const elementRef = useRef<HTMLElement>(null);
 
-    useEffect(() => {
+    useGSAP(() => {
         if (!elementRef.current || !animationConfig.enabled) return;
 
-        const ctx = gsap.context(() => {
-            const tween = animation(elementRef.current!);
+        const tween = animation(elementRef.current!);
 
-            ScrollTrigger.create({
-                trigger: options.trigger || elementRef.current,
-                start: options.start || animationConfig.scrollTrigger.start,
-                end: options.end || animationConfig.scrollTrigger.end,
-                animation: tween,
-                scrub: options.scrub,
-                markers: options.markers,
-                onEnter: options.onEnter,
-                onLeave: options.onLeave,
-            });
+        ScrollTrigger.create({
+            trigger: options.trigger || elementRef.current,
+            start: options.start || animationConfig.scrollTrigger.start,
+            end: options.end || animationConfig.scrollTrigger.end,
+            animation: tween,
+            scrub: options.scrub,
+            markers: options.markers,
+            onEnter: options.onEnter,
+            onLeave: options.onLeave,
         });
-
-        return () => ctx.revert();
-    }, [animation, options]);
+    }, { scope: elementRef, dependencies: [animation, options] });
 
     return elementRef;
 }

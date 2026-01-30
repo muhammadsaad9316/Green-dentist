@@ -1,22 +1,21 @@
-import { useState, useEffect } from "react";
+"use client";
+
+import { useSyncExternalStore, useCallback } from "react";
 
 export function useMediaQuery(query: string): boolean {
-    const [matches, setMatches] = useState(false);
+    const subscribe = useCallback((callback: () => void) => {
+        const matchMedia = window.matchMedia(query);
+        matchMedia.addEventListener("change", callback);
+        return () => matchMedia.removeEventListener("change", callback);
+    }, [query]);
 
-    useEffect(() => {
-        const media = window.matchMedia(query);
+    const getSnapshot = () => {
+        return window.matchMedia(query).matches;
+    };
 
-        if (media.matches !== matches) {
-            setMatches(media.matches);
-        }
+    const getServerSnapshot = () => false;
 
-        const listener = (event: MediaQueryListEvent) => setMatches(event.matches);
-        media.addEventListener("change", listener);
-
-        return () => media.removeEventListener("change", listener);
-    }, [matches, query]);
-
-    return matches;
+    return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 }
 
 // Preset hooks for common breakpoints

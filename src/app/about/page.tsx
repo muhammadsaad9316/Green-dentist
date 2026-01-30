@@ -1,5 +1,4 @@
-import { Navbar } from "@/components/layout/navbar";
-import { Footer } from "@/components/layout/footer";
+
 import { TeamIntro } from "@/components/about/team-intro";
 import { PracticeTimeline } from "@/components/about/timeline";
 import { StatsCounter } from "@/components/about/stats-counter";

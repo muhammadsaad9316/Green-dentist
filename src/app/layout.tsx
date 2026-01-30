@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-// import { Fraunces, Outfit } from "next/font/google";
+import { Fraunces, Outfit } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
@@ -8,22 +8,18 @@ import { WhatsAppButton } from "@/components/ui/whatsapp-button";
 import { Toaster } from "sonner";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 
-// Create mocks for variables to avoid breaking usage in layout
-const sans = { variable: "font-sans" }; // Fallback to system sans
-const serif = { variable: "font-serif" }; // Fallback to system serif
+const sans = Outfit({
+  variable: "--font-sans",
+  subsets: ["latin"],
+  display: "swap",
+});
 
-// const sans = Outfit({
-//   variable: "--font-sans",
-//   subsets: ["latin"],
-//   display: "swap",
-// });
-
-// const serif = Fraunces({
-//   variable: "--font-serif",
-//   subsets: ["latin"],
-//   display: "swap",
-//   axes: ["SOFT", "WONK", "opsz"],
-// });
+const serif = Fraunces({
+  variable: "--font-serif",
+  subsets: ["latin"],
+  display: "swap",
+  axes: ["SOFT", "WONK", "opsz"],
+});
 
 export const metadata: Metadata = {
   title: {

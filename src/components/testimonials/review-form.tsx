@@ -13,6 +13,7 @@ import { useState } from "react";
 
 import { logger } from "@/lib/logger";
 import { useThrottle } from "@/hooks/useThrottle";
+import { submitReview } from "@/services/testimonialService";
 
 const formSchema = z.object({
     name: z.string().min(2, "Name is required"),
@@ -37,10 +38,16 @@ export function ReviewForm() {
 
     const onSubmit = async (data: FormData) => {
         setIsSubmitting(true);
-        await new Promise(resolve => setTimeout(resolve, 1500)); // Simulate API
-        logger.info("Review Submitted:", data);
-        setIsSubmitting(false);
-        setIsSuccess(true);
+        try {
+            await submitReview(data);
+            logger.info("Review Submitted:", data);
+            setIsSuccess(true);
+        } catch (error) {
+            logger.error("Failed to submit review:", error);
+            // Optionally set a form error here
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     const throttledSubmit = useThrottle(onSubmit, 2000);
@@ -62,13 +69,13 @@ export function ReviewForm() {
                 <form onSubmit={handleSubmit(throttledSubmit)} className="space-y-6">
                     <div className="grid md:grid-cols-2 gap-6">
                         <div className="space-y-2">
-                            <Label>Full Name</Label>
-                            <Input {...register("name")} placeholder="Your Name" />
+                            <Label htmlFor="rv-name">Full Name</Label>
+                            <Input id="rv-name" {...register("name")} placeholder="Your Name" />
                             {errors.name && <p role="alert" aria-live="polite" className="text-red-500 text-sm">{errors.name.message}</p>}
                         </div >
                         <div className="space-y-2">
-                            <Label>Email Address</Label>
-                            <Input {...register("email")} placeholder="you@example.com" />
+                            <Label htmlFor="rv-email">Email Address</Label>
+                            <Input id="rv-email" {...register("email")} placeholder="you@example.com" />
                             {errors.email && <p role="alert" aria-live="polite" className="text-red-500 text-sm">{errors.email.message}</p>}
                         </div>
                     </div >
@@ -80,9 +87,10 @@ export function ReviewForm() {
                                 <button
                                     key={star}
                                     type="button"
+                                    aria-label={`Rate ${star} stars`}
                                     onClick={() => setValue("rating", star)}
                                     onMouseEnter={() => setHoverRating(star)}
-                                    className="focus:outline-none transition-transform hover:scale-110"
+                                    className="focus:outline-none transition-transform hover:scale-110 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary rounded-full p-1"
                                 >
                                     <Star
                                         size={28}
@@ -96,8 +104,9 @@ export function ReviewForm() {
                     </div>
 
                     <div className="space-y-2">
-                        <Label>Your Experience</Label>
+                        <Label htmlFor="rv-review">Your Experience</Label>
                         <Textarea
+                            id="rv-review"
                             {...register("review")}
                             placeholder="Tell us about your visit..."
                             className="min-h-[120px]"
