@@ -1,6 +1,6 @@
 
 import { ReviewCarousel } from "@/components/testimonials/review-carousel";
-import { ReviewForm } from "../../components/testimonials/review-form";
+import { ReviewForm } from "@/components/testimonials/review-form";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 
 export default function TestimonialsPage() {
