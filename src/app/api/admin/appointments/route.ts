@@ -1,64 +1,39 @@
 import { NextResponse } from 'next/server';
-import prisma from '@/lib/prisma';
-import { auth } from '@/auth';
+import { getAllAppointments } from '@/lib/dummy-store';
 
 export async function GET(request: Request) {
     try {
-        const session = await auth();
-        if (!session?.user) {
-            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-        }
-
         const { searchParams } = new URL(request.url);
         const status = searchParams.get('status');
-        const search = searchParams.get('search');
+        const search = searchParams.get('search')?.toLowerCase();
         const startDate = searchParams.get('startDate');
         const endDate = searchParams.get('endDate');
 
-        // Build where clause
-        const where: any = {};
+        let appointments = getAllAppointments();
 
         if (status && status !== 'ALL') {
-            where.status = status;
+            appointments = appointments.filter(a => a.status === status);
         }
 
         if (search) {
-            where.OR = [
-                { patient: { name: { contains: search, mode: 'insensitive' } } },
-                { patient: { email: { contains: search, mode: 'insensitive' } } },
-                { confirmationNumber: { contains: search, mode: 'insensitive' } },
-            ];
+            appointments = appointments.filter(a =>
+                a.patient.name.toLowerCase().includes(search) ||
+                a.patient.email.toLowerCase().includes(search) ||
+                a.confirmationNumber.toLowerCase().includes(search)
+            );
         }
 
         if (startDate && endDate) {
-            where.date = {
-                gte: new Date(startDate),
-                lte: new Date(endDate),
-            };
+            const start = new Date(startDate);
+            const end = new Date(endDate);
+            appointments = appointments.filter(a => a.date >= start && a.date <= end);
         }
 
-        const appointments = await prisma.appointment.findMany({
-            where,
-            include: {
-                patient: {
-                    select: {
-                        name: true,
-                        email: true,
-                        phone: true,
-                    }
-                },
-            },
-            orderBy: {
-                date: 'desc',
-            },
-        });
+        const sorted = [...appointments].sort((a, b) => b.date.getTime() - a.date.getTime());
 
-        return NextResponse.json(appointments);
+        return NextResponse.json(sorted);
     } catch (error) {
         console.error('Error fetching appointments:', error);
-        return NextResponse.json(
-            { error: 'Failed to fetch appointments' },
-            { status: 500 }
-        );
+        return NextResponse.json({ error: 'Failed to fetch appointments' }, { status: 500 });
     }
 }

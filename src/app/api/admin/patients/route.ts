@@ -1,49 +1,29 @@
 import { NextResponse } from 'next/server';
-import prisma from '@/lib/prisma';
-import { auth } from '@/auth';
+import { getAllPatients } from '@/lib/dummy-store';
 
 export async function GET(request: Request) {
     try {
-        const session = await auth();
-        if (!session?.user) {
-            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-        }
-
         const { searchParams } = new URL(request.url);
-        const search = searchParams.get('search');
+        const search = searchParams.get('search')?.toLowerCase();
         const page = parseInt(searchParams.get('page') || '1');
         const limit = parseInt(searchParams.get('limit') || '20');
-        const skip = (page - 1) * limit;
 
-        const where: any = {};
+        let patients = getAllPatients();
 
         if (search) {
-            where.OR = [
-                { name: { contains: search, mode: 'insensitive' } },
-                { email: { contains: search, mode: 'insensitive' } },
-                { phone: { contains: search, mode: 'insensitive' } },
-            ];
+            patients = patients.filter(p =>
+                p.name.toLowerCase().includes(search) ||
+                p.email.toLowerCase().includes(search) ||
+                p.phone.includes(search)
+            );
         }
 
-        const [patients, total] = await Promise.all([
-            prisma.patient.findMany({
-                where,
-                take: limit,
-                skip,
-                include: {
-                    _count: {
-                        select: { appointments: true },
-                    },
-                },
-                orderBy: {
-                    createdAt: 'desc',
-                },
-            }),
-            prisma.patient.count({ where }),
-        ]);
+        const total = patients.length;
+        const skip = (page - 1) * limit;
+        const paginated = patients.slice(skip, skip + limit);
 
         return NextResponse.json({
-            patients,
+            patients: paginated,
             pagination: {
                 total,
                 pages: Math.ceil(total / limit),
@@ -53,9 +33,6 @@ export async function GET(request: Request) {
         });
     } catch (error) {
         console.error('Error fetching patients:', error);
-        return NextResponse.json(
-            { error: 'Failed to fetch patients' },
-            { status: 500 }
-        );
+        return NextResponse.json({ error: 'Failed to fetch patients' }, { status: 500 });
     }
 }

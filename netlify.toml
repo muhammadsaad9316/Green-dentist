@@ -1,12 +1,6 @@
 [build]
-  command = "npm run build"
+  command = "npm run build:demo"
   publish = ".next"
-
-# Configure secrets scanning to allow public environment variables
-[build.environment]
-  # Omit NEXT_PUBLIC_* variables from secrets scanning
-  # These are intentionally included in the client bundle by Next.js
-  SECRETS_SCAN_OMIT_KEYS = "NEXT_PUBLIC_API_URL,NEXTAUTH_URL"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"

@@ -1,14 +1,16 @@
 import NextAuth from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
 import { authConfig } from './auth.config';
-import prisma from '@/lib/prisma';
-import bcrypt from 'bcryptjs';
 import { z } from 'zod';
 
-// Schema for login validation
+// Demo credentials — insecure by design, for presentation only
+const DEMO_EMAIL = 'admin@greendentist.com';
+const DEMO_PASSWORD = 'demo1234';
+const DEMO_ADMIN = { id: 'demo-admin', name: 'Demo Admin', email: DEMO_EMAIL, role: 'ADMIN' };
+
 const LoginSchema = z.object({
     email: z.string().email(),
-    password: z.string().min(6),
+    password: z.string().min(1),
 });
 
 export const { auth, signIn, signOut, handlers } = NextAuth({
@@ -16,31 +18,15 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
     providers: [
         Credentials({
             async authorize(credentials) {
-                const parsedCredentials = LoginSchema.safeParse(credentials);
+                const parsed = LoginSchema.safeParse(credentials);
+                if (!parsed.success) return null;
 
-                if (parsedCredentials.success) {
-                    const { email, password } = parsedCredentials.data;
+                const { email, password } = parsed.data;
 
-                    const user = await prisma.admin.findUnique({
-                        where: { email },
-                    });
-
-                    if (!user) return null;
-
-                    const passwordsMatch = await bcrypt.compare(password, user.password);
-
-                    if (passwordsMatch) {
-                        // Return user object compatible with NextAuth
-                        return {
-                            id: user.id,
-                            name: user.name,
-                            email: user.email,
-                            role: user.role,
-                        };
-                    }
+                if (email === DEMO_EMAIL && password === DEMO_PASSWORD) {
+                    return DEMO_ADMIN;
                 }
 
-                console.log('Invalid credentials');
                 return null;
             },
         }),
