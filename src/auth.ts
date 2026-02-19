@@ -15,6 +15,8 @@ const LoginSchema = z.object({
 
 export const { auth, signIn, signOut, handlers } = NextAuth({
     ...authConfig,
+    trustHost: true, // Explicitly trust Vercel host
+    secret: process.env.AUTH_SECRET, // Ensure secret is passed explicitly
     providers: [
         Credentials({
             async authorize(credentials) {
