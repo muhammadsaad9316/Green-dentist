@@ -12,10 +12,14 @@ export async function middleware(request: NextRequest) {
             return NextResponse.next();
         }
 
+        // Check for all possible cookie names
         const token = request.cookies.get('authjs.session-token')?.value ||
-            request.cookies.get('__Secure-authjs.session-token')?.value;
+            request.cookies.get('__Secure-authjs.session-token')?.value ||
+            request.cookies.get('next-auth.session-token')?.value ||
+            request.cookies.get('__Secure-next-auth.session-token')?.value;
 
         if (!token) {
+            console.log('Middleware: No token found, redirecting to login');
             return NextResponse.redirect(new URL('/admin/login', request.url));
         }
 
@@ -24,6 +28,7 @@ export async function middleware(request: NextRequest) {
             await jwtVerify(token, secret);
             return NextResponse.next();
         } catch (error) {
+            console.error('Middleware: Token verification failed:', error);
             // Token invalid or verification failed
             return NextResponse.redirect(new URL('/admin/login', request.url));
         }
